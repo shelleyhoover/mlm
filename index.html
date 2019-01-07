@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2018 by cmrRose (http://jsbin.com/sasojat/5/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+ 
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  
+  <!-- Load Leaflet from CDN-->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script>
+
+  <title>/^\</title>
+<style id="he">
+#map{
+  height: 400px;
+  width: 700px;
+}
+</style>
+</head>
+<body>
+  <h1 style="font-family:verdana; width: 700px;"> Multi-Level Marketing Organizations </h1>
+  <h3 style="font-family:verdana; width: 700px;"> Headquarters of Direct Selling Association Members </h3>
+<!-- Filter selection -->
+
+<p style="font-family:verdana; width: 700px;">Filter by Product Type: </p>
+  <select id="filter" name="filter">
+    <option value="">All Categories</option>
+    <option value="clothing">Clothing/Fashion</option>
+    <option value="craft">Craft/Hobby</option>
+    <option value="food">Food/Drink</option>
+    <option value="health">Health/Beauty</option>
+    <option value="homegoods">Homegoods</option>
+    <option value="other">Other</option>
+    <option value="technology">Technology</option>
+    <option value="utlities">Utilities</option>
+  </select>
+
+  
+<div id="map" ></div>
+ 
+
+  
+  
+<!-- Data as a geojson, stored in a variable -->  
+  <script type='text/javascript'>
+  var pointsData = {
+  "type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "Organizati": "Essential Bodywear", "Category": "Clothing\/Fashion", "Products": "Lingerie\/Sleepwear", "Address": "9850 South 300 West, Sandy, UT, 84070-3262", "Email": "distributorservices@4life.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -111.901618, 40.572664 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Gracewear Collection", "Category": "Clothing\/Fashion", "Products": "Jewelry", "Address": "1801 North Lamar Street, Dallas, TX, 75202-1711", "Email": "marketingteam@ambitenergy.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -96.806303, 32.782314 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Initial Outfitters", "Category": "Clothing\/Fashion", "Products": "Jewelry", "Address": "1116 East State Street, Olean, NY, 14760-3814", "Email": "publicrelations@cutco.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -78.407383, 42.073285 ] } },
+{ "type": "Feature", "properties": { "Organizati": "jBloom", "Category": "Clothing\/Fashion", "Products": "Jewelry", "Address": "4165 Shoreline Dr, Spring Park, MN, 55384-9651", "Email": "http:\/\/www.enzacta.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -93.628168, 44.934724 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Origami Owl", "Category": "Clothing\/Fashion", "Products": "Jewelry", "Address": "4609 W. 65th S., Idaho Falls, ID, 83402-5742", "Email": null, "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -112.125042, 43.439443 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Premier Designs, Inc.", "Category": "Clothing\/Fashion", "Products": "Jewelry", "Address": "4006 Belt Line Road, Addison, TX, 75001-5841", "Email": "http:\/\/www.nerium.com\/Default.aspx", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -96.846755, 32.952376 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Sabika, Inc.", "Category": "Clothing\/Fashion", "Products": "Jewelry", "Address": "One Pampered Chef Lane, Addison, IL, 60101-1498", "Email": "solution_center@pamperedchef.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -88.01305, 41.93106 ] } },
+{ "type": "Feature", "properties": { "Organizati": "SAS SPURILLA, LLC", "Category": "Clothing\/Fashion", "Products": "Jewelry", "Address": "1551 Corporate Drive, Irving, TX, 75038-2431", "Email": "pdiadm@premierdesigns.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -96.978499, 32.889258 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Touchstone Crystal, Inc.", "Category": "Clothing\/Fashion", "Products": "Jewelry", "Address": "1319 Kingsway Rd., Brandon, FL, 33510-2515", "Email": "support@talkfusion.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -82.277143, 27.960612 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Traci Lynn Inc.", "Category": "Clothing\/Fashion", "Products": "Jewelry", "Address": "1920 Turning Leaf Lane, SW, Alexandria, MN, 56308-4505", "Email": "lynn.arnquist@tastefullysimple.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -95.40585, 45.889648 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Vantel Pearls", "Category": "Clothing\/Fashion", "Products": "Jewelry", "Address": "4601 E. Moody Blvd Unit K-6, Bunnell, FL, 32110-9009", "Email": "http:\/\/www.tradesofhope.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -81.226057, 29.474554 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Nefful U.S.A., Inc.", "Category": "Clothing\/Fashion", "Products": "Fashion Accessories, Lingerie\/Sleepwear, Nutritional Supplements", "Address": "1106 Eaglecrest, Nixa, MO, 65714-8476", "Email": "support@jordanessentials.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -93.308604, 37.061392 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Fifth Avenue Collection, Inc.", "Category": "Clothing\/Fashion", "Products": "Fashion Accessories, Jewelry", "Address": "1000 Progress Place, Concord, NC, 28025-2449", "Email": "ncmarketing@acninc.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -80.597066, 35.449743 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Noonday Collection", "Category": "Clothing\/Fashion", "Products": "Fashion Accessories, Home Accessories\/Decor, Jewelry", "Address": "9785 S. Monroe Street, Sandy, UT, 84070-4292", "Email": "info@lifevantage.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -111.898913, 40.573954 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Thirty-One Gifts", "Category": "Clothing\/Fashion", "Products": "Fashion Accessories, Giftware, Home Accessories\/Decor, Stationery\/Paper Products", "Address": "1955 W. Grove Parkway, Pleasant Grove, UT, 84062-6730", "Email": "hotline@synergyworldwide.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -111.767013, 40.354284 ] } },
+{ "type": "Feature", "properties": { "Organizati": "New Avon LLC", "Category": "Clothing\/Fashion", "Products": "Cosmetics, Fashion Accessories, Fragrances, Giftware, Jewelry, Personal Care, Skincare", "Address": "1920 West 114th Street, Cleveland, OH, 44102-2344", "Email": "consumer@kirbywhq.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -81.766512, 41.47874 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Boisset Collection", "Category": "Clothing\/Fashion", "Products": "Clothing\/Shoes, Fashion Accessories, House and Kitchenwares, Party Supplies, Tableware, Wine\/Wine Accessories", "Address": "2851 Cypress Creek Road, Fort Lauderdale, FL, 33309-1705", "Email": "diciaccoj@carico.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -80.184219, 26.203255 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Trades of Hope", "Category": "Clothing\/Fashion", "Products": "Clothing\/Shoes, Fashion Accessories, Home Accessories\/Decor, Jewelry", "Address": "25 Bermar Park Suite #4, Rochester, NY, 14624-1542", "Email": "customerservice@tealightfultea.com", "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -77.701316, 43.149138 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Initials, Inc.", "Category": "Clothing\/Fashion", "Products": "Baby\/Childcare, Fashion Accessories, Giftware, Home Accessories\/Decor, House and Kitchenwares", "Address": "12336 W. Overland Rd, Boise, ID, 83709-5408", "Email": null, "catid": "clothing" }, "geometry": { "type": "Point", "coordinates": [ -116.335989, 43.590509 ] } },
+{ "type": "Feature", "properties": { "Organizati": "SimplyFun, LLC", "Category": "Craft\/Hobby", "Products": "Toys\/Games", "Address": "PO Box 405, Chesterfield, MO, 63006-0405", "Email": "smontgomery@relivinc.com", "catid": "craft" }, "geometry": { "type": "Point", "coordinates": [ -90.650024, 38.637002 ] } },
+{ "type": "Feature", "properties": { "Organizati": "SendOutCards", "Category": "Craft\/Hobby", "Products": "Stationery\/Paper Products", "Address": "1 Carding Ln, Johnston, RI, 02919-4621", "Email": "CustomerService@purehavenessentials.com", "catid": "craft" }, "geometry": { "type": "Point", "coordinates": [ -71.499306, 41.818252 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Journey Blooms", "Category": "Craft\/Hobby", "Products": "Rubber Stamps, Scrapbooking\/Photo Albums, Stationery\/Paper Products", "Address": "701 Palomar Airport Road #300, Carlsbad, CA, 92011-1028", "Email": "support@website.ws", "catid": "craft" }, "geometry": { "type": "Point", "coordinates": [ -117.323507, 33.121552 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Stampin' Up!", "Category": "Craft\/Hobby", "Products": "Rubber Stamps, Scrapbooking\/Photo Albums", "Address": "50 W. Big Beaver, Ste. 350, Troy, MI, 48084-5203", "Email": "contact@rexairllc.com", "catid": "craft" }, "geometry": { "type": "Point", "coordinates": [ -83.148826, 42.563001 ] } },
+{ "type": "Feature", "properties": { "Organizati": "World Book, Inc.", "Category": "Craft\/Hobby", "Products": "Educational Materials, Encyclopedias", "Address": "15 Wellington Road, Lincoln, RI, 02865-4411", "Email": "wthrc@wildtree.com", "catid": "craft" }, "geometry": { "type": "Point", "coordinates": [ -71.474113, 41.924811 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Southwestern Advantage", "Category": "Craft\/Hobby", "Products": "Books, Software\/Computers", "Address": "15885 NE 28th Street, Bellevue, WA, 98008-2127", "Email": "rwexec@renaware.com", "catid": "craft" }, "geometry": { "type": "Point", "coordinates": [ -122.129284, 47.634861 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Usborne Books & More", "Category": "Craft\/Hobby", "Products": "Baby\/Childcare, Books, Educational Materials, Encyclopedias, Toys\/Games", "Address": "4701 NW 33rd Ave, Oakland Park, FL, 33309-6807", "Email": "Fashion@tracilynnjewelry.com", "catid": "craft" }, "geometry": { "type": "Point", "coordinates": [ -80.191987, 26.185087 ] } },
+{ "type": "Feature", "properties": { "Organizati": "viaONEHOPE", "Category": "Food\/Drink", "Products": "Wine\/Wine Accessories", "Address": "PO Box 799045, Dallas, TX, 75379-9045", "Email": "info@marykay.com", "catid": "food" }, "geometry": { "type": "Point", "coordinates": [ -96.790329, 32.781179 ] } },
+{ "type": "Feature", "properties": { "Organizati": "WineShop At Home", "Category": "Food\/Drink", "Products": "Food\/Gourmet Items, Party Supplies, Tableware, Wine\/Wine Accessories", "Address": "450 N 54th St, Chandler, AZ, 85226-2528", "Email": "bailey@willa.com", "catid": "food" }, "geometry": { "type": "Point", "coordinates": [ -111.968024, 33.309932 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Tastefully Simple, Inc.", "Category": "Food\/Drink", "Products": "Food\/Gourmet Items", "Address": "2451 Atrium Way, Nashville, TN, 37214-5102", "Email": "trey.campbell@southwestern.com", "catid": "food" }, "geometry": { "type": "Point", "coordinates": [ -86.690242, 36.161234 ] } },
+{ "type": "Feature", "properties": { "Organizati": "THE COCOA EXCHANGE", "Category": "Food\/Drink", "Products": "Food\/Gourmet Items", "Address": "1625 Abalone Avenue, Torrance, CA, 90501-2860", "Email": "info@sunrider.com", "catid": "food" }, "geometry": { "type": "Point", "coordinates": [ -118.311912, 33.832046 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Wildtree", "Category": "Food\/Drink", "Products": "Food\/Gourmet Items", "Address": "4100 Alpha Road, Dallas, TX, 75244-4326", "Email": "purso@aerusonline.com", "catid": "food" }, "geometry": { "type": "Point", "coordinates": [ -96.840286, 32.932051 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Tealightful Inc.", "Category": "Food\/Drink", "Products": "Coffee\/Tea\/Specialty Beverages, Food\/Gourmet Items, Giftware, Tableware", "Address": "12907 South 3600W, Riverton, UT, 84065-6972", "Email": "ds@stampinup.com", "catid": "food" }, "geometry": { "type": "Point", "coordinates": [ -111.973954, 40.517382 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Harmony Green America, Inc", "Category": "Food\/Drink", "Products": "Coffee\/Tea\/Specialty Beverages", "Address": "9400 Jeronimo Road, Irvine, CA, 92618-1907", "Email": "communications@arbonne.com", "catid": "food" }, "geometry": { "type": "Point", "coordinates": [ -117.719808, 33.649593 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Nerium International", "Category": "Health\/Beauty", "Products": "Skincare", "Address": "140 Crescent Drive, Collierville, TN, 38017-3374", "Email": "moreinfo@juiceplus.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -89.697591, 35.040375 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Pharmanex (Division of Nu Skin Enterprises)", "Category": "Health\/Beauty", "Products": "Nutritional Supplements, Weight Management", "Address": "3500 Gateway Boulevard, Fremont, CA, 94538-6584", "Email": "gnldleads@us.gnld.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -121.940609, 37.474007 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Xyngular", "Category": "Health\/Beauty", "Products": "Nutritional Supplements, Weight Management", "Address": "525 Airpark Road, Napa, CA, 94558-7514", "Email": "info@1800wineshop.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -122.270891, 38.221771 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Team Beachbody", "Category": "Health\/Beauty", "Products": "Nutritional Supplements, Sporting Goods", "Address": "5402 S 122nd E Ave, Tulsa, OK, 74146", "Email": "http:\/\/www.usbornebooksandmore.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -95.842376, 36.086075 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Mannatech, Inc.", "Category": "Health\/Beauty", "Products": "Nutritional Supplements, Skincare, Weight Management", "Address": "3325 Skyway Drive, Auburn, AL, 36830-6443", "Email": "info@initialoutfitters.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -85.427587, 32.613184 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Youngevity International, Inc.", "Category": "Health\/Beauty", "Products": "Nutritional Supplements, Skincare, Weight Management", "Address": "2400 Boswell Rd., Chula Vista, CA, 91914-3553", "Email": "corpoffice@youngevity.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -116.961491, 32.654504 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Jeunesse Global", "Category": "Health\/Beauty", "Products": "Nutritional Supplements, Skincare", "Address": "3160 Dallavo Court, Commerce Township, MI, 48390-1606", "Email": "mary@essentialbodywear.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -83.452959, 42.56789 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Reliv International, Inc.", "Category": "Health\/Beauty", "Products": "Nutritional Supplements, Personal Care", "Address": "1911 South Susan Street, Santa Ana, CA, 92704-3901", "Email": null, "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -117.91202, 33.720435 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Young Living", "Category": "Health\/Beauty", "Products": "Nutritional Supplements, Personal Care", "Address": "2802 Kelvin Ave., Irvine, CA, 92614-5898", "Email": "info@yorcorp.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -117.836952, 33.682533 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Enzacta USA", "Category": "Health\/Beauty", "Products": "Nutritional Supplements", "Address": "5420 LBJ Freeway, Dallas, TX, 75240-9601", "Email": "tristar@tristarclean.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -96.816791, 32.924713 ] } },
+{ "type": "Feature", "properties": { "Organizati": "The Juice Plus+ Company, LLC", "Category": "Health\/Beauty", "Products": "Nutritional Supplements", "Address": "6205 South Arizona Avenue, Chandler, AZ, 85248-6399", "Email": "http:\/\/www.goldcanyon.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -111.83892, 33.215892 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Kyani, Inc.", "Category": "Health\/Beauty", "Products": "Nutritional Supplements", "Address": "2009 Renaissance Blvd, King of Prussia, PA, 19406-2763", "Email": "office@h2oathome.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -75.3338, 40.082165 ] } },
+{ "type": "Feature", "properties": { "Organizati": "The Limu Company, LLC", "Category": "Health\/Beauty", "Products": "Nutritional Supplements", "Address": "25420 Kuykendahl Road, Tomball, TX, 77375-3434", "Email": "info@immunotec.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -95.5519, 30.130603 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Orenda International, LLC", "Category": "Health\/Beauty", "Products": "Nutritional Supplements", "Address": "100 International Drive, Baltimore, MD, 21202-4679", "Email": null, "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -76.602224, 39.282695 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Sanki Global LLC", "Category": "Health\/Beauty", "Products": "Nutritional Supplements", "Address": "75 West Center Street, Provo, UT, 84601-4432", "Email": null, "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -111.659776, 40.233503 ] } },
+{ "type": "Feature", "properties": { "Organizati": "YOR Health", "Category": "Health\/Beauty", "Products": "Nutritional Supplements", "Address": "1250 E 200 S, Lehi, UT, 84043-1483", "Email": null, "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -111.830407, 40.384984 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Zinzino LLC", "Category": "Health\/Beauty", "Products": "Nutritional Supplements", "Address": "1200 University Blvd, Jupiter, FL, 33458-5215", "Email": "DAG@zinzino.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -80.115069, 26.890304 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Zrii", "Category": "Health\/Beauty", "Products": "Nutritional Supplements", "Address": "14183 S. Minuteman Dr., Draper, UT, 84020-8982", "Email": "info@zrii.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -111.890009, 40.493683 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Pure Haven Essentials", "Category": "Health\/Beauty", "Products": "Homecare, Personal Care", "Address": "1095 Main Street, Irvine, CA, 92614-6715", "Email": null, "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -117.866479, 33.691328 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Melaleuca, Inc.", "Category": "Health\/Beauty", "Products": "Homecare, Nutritional Supplements, Personal Care", "Address": "2451 Townsgate Road, Westlake Village, CA, 91361-2506", "Email": "jafra4me@jafra.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -118.832353, 34.160993 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Medifast - OPTAVIA", "Category": "Health\/Beauty", "Products": "Health\/Fitness\/Wellness, Weight Management", "Address": "155 E. Rivulon Boulevard, Gilbert, AZ, 85297-0002", "Email": "support@isagenixcorp.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -111.785805, 33.284691 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Synergy WorldWide", "Category": "Health\/Beauty", "Products": "Health\/Fitness\/Wellness, Nutritional Supplements, Weight Management", "Address": "1825 West Research Way, Salt Lake City, UT, 84119-2307", "Email": "Marketing@SendOutCards.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -111.94089, 40.71048 ] } },
+{ "type": "Feature", "properties": { "Organizati": "AdvoCare International, LP", "Category": "Health\/Beauty", "Products": "Health\/Fitness\/Wellness, Nutritional Supplements, Skincare, Weight Management", "Address": "1 American Road, Brooklyn, OH, 44144-2301", "Email": "tduggan@filterqueen.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -81.763625, 41.437532 ] } },
+{ "type": "Feature", "properties": { "Organizati": "New Earth", "Category": "Health\/Beauty", "Products": "Health\/Fitness\/Wellness, Nutritional Supplements, Skincare", "Address": "1070 River Walk Drive, Idaho Falls, ID, 83402-3300", "Email": "cs.usa@kyanicorp.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -112.048129, 43.487161 ] } },
+{ "type": "Feature", "properties": { "Organizati": "RBC Life", "Category": "Health\/Beauty", "Products": "Health\/Fitness\/Wellness, Nutritional Supplements, Skincare", "Address": "75 West Center Street, Provo, UT, 84601-4432", "Email": "businesssupport@nuskin.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -111.659776, 40.233503 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Forever Living Products", "Category": "Health\/Beauty", "Products": "Health\/Fitness\/Wellness, Nutritional Supplements, Personal Care, Weight Management", "Address": "2801 Summit Avenue, Plano, TX, 75074-7453", "Email": "customerservice@advocare.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -96.676928, 33.010531 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Herbalife Nutrition", "Category": "Health\/Beauty", "Products": "Health\/Fitness\/Wellness, Nutritional Supplements, Personal Care, Skincare, Weight Management", "Address": "5200 Blue Lagoon Drive Suite 620, Miami, FL, 33126-7005", "Email": "contactus@belcorpusa.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -80.280563, 25.781581 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Isagenix International", "Category": "Health\/Beauty", "Products": "Health\/Fitness\/Wellness, Nutritional Supplements, Personal Care, Skincare, Weight Management", "Address": "1814 Eastchester Drive, High Point, NC, 27265-1403", "Email": "admin@dudleyq.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -79.987878, 36.005719 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Immunotec Research Inc", "Category": "Health\/Beauty", "Products": "Health\/Fitness\/Wellness, Nutritional Supplements, Personal Care", "Address": "849 Zinfandel Lane, St. Helena, CA, 94574-1645", "Email": "customercare@boisset.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -122.434926, 38.482376 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Shaklee Corporation", "Category": "Health\/Beauty", "Products": "Health\/Fitness\/Wellness, Homecare, Nutritional Supplements, Personal Care, Skincare, Water Treatment Systems, Weight Management", "Address": "1675 Reigle Drive, Kewaskum, WI, 53040-8923", "Email": "jreigle@regalware.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -88.227777, 43.52525 ] } },
+{ "type": "Feature", "properties": { "Organizati": "John Amico Haircare Products", "Category": "Health\/Beauty", "Products": "Haircare\/Hair Accessories, Personal Care", "Address": "12460 Crabapple Road, Alpharetta, GA, 30004-6646", "Email": "info@fifthavenuecollection.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -84.358426, 34.085419 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Morinda, Inc.", "Category": "Health\/Beauty", "Products": "Haircare\/Hair Accessories, Health\/Fitness\/Wellness, Nutritional Supplements, Personal Care, Skincare, Spa Products, Weight Management", "Address": "701 International Parkway, Altamonte Springs, FL, 32746-5622", "Email": "marketing@jeunesseglobal.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -81.357665, 28.77512 ] } },
+{ "type": "Feature", "properties": { "Organizati": "USANA Health Sciences, Inc.", "Category": "Health\/Beauty", "Products": "Haircare\/Hair Accessories, Health\/Fitness\/Wellness, Nutritional Supplements, Oral Hygiene, Personal Care, Skincare, Weight Management", "Address": "1 Kenney Drive, Cranston, RI, 02920-4403", "Email": "support@touchstonecrystal.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -71.456561, 41.742841 ] } },
+{ "type": "Feature", "properties": { "Organizati": "NeoLife International, LLC", "Category": "Health\/Beauty", "Products": "Food\/Gourmet Items, Haircare\/Hair Accessories, Health\/Fitness\/Wellness, Homecare, Nutritional Supplements, Personal Care, Skincare, Water Treatment Systems, Weight Management", "Address": "1125 W. Pinnacle Peak Road, Phoenix, AZ, 85027-1402", "Email": null, "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -112.088562, 33.697138 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Lemongrass Spa Products", "Category": "Health\/Beauty", "Products": "Cosmetics, Skincare, Spa Products", "Address": "800 West Olympic Boulevard, Los Angeles, CA, 90015-1367", "Email": null, "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -118.264527, 34.044838 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Belcorp USA", "Category": "Health\/Beauty", "Products": "Cosmetics, Skincare", "Address": "1 Primerica Parkway, Duluth, GA, 30099-0001", "Email": "anne.soutter@primerica.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -84.09778, 33.985817 ] } },
+{ "type": "Feature", "properties": { "Organizati": "L'BRI PURE n' NATURAL'", "Category": "Health\/Beauty", "Products": "Cosmetics, Skincare", "Address": "5821 East Harrison, Harlingen, TX, 78550-1811", "Email": "info@hg-america.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -97.641606, 26.190921 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Mary Kay Inc.", "Category": "Health\/Beauty", "Products": "Cosmetics, Skincare", "Address": "583 Grant Street, Clarkesville, GA, 30523-5440", "Email": "support@initials-inc.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -83.519782, 34.618525 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Willing Beauty", "Category": "Health\/Beauty", "Products": "Cosmetics, Skincare", "Address": "111 Forbes Blvd., Mansfield, MA, 02048-1124", "Email": "sales@vantelpearls.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -71.239199, 42.030305 ] } },
+{ "type": "Feature", "properties": { "Organizati": "SeneGence International", "Category": "Health\/Beauty", "Products": "Cosmetics, Personal Care", "Address": "2301 Crown Court, Irving, TX, 75038-4305", "Email": "pr@rbclifesciences.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -96.976118, 32.873214 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Sunrider International", "Category": "Health\/Beauty", "Products": "Cosmetics, Homecare, Nutritional Supplements, Personal Care, Skincare", "Address": "105 N. Pecos Rd., Henderson, NV, 89074-1917", "Email": "support@sankiglobal.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -115.100728, 36.035202 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Univera", "Category": "Health\/Beauty", "Products": "Cosmetics, Health\/Fitness\/Wellness, Nutritional Supplements, Spa Products, Weight Management", "Address": "3425 Morse Crossing, Columbus, OH, 43219-6014", "Email": null, "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -82.924618, 40.046418 ] } },
+{ "type": "Feature", "properties": { "Organizati": "NHT Global, Inc.", "Category": "Health\/Beauty", "Products": "Cosmetics, Health\/Fitness\/Wellness, Nutritional Supplements, Skincare, Weight Management", "Address": "909 Perkins Drive, Mukwonago, WI, 53149-1400", "Email": "support@lbri.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -88.315012, 42.864655 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Aloette Cosmetics, Inc.", "Category": "Health\/Beauty", "Products": "Cosmetics, Haircare\/Hair Accessories, Personal Care, Skincare", "Address": "180 N. LaSalle St., Chicago, IL, 60601-2500", "Email": "sean.klunder@worldbook.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -87.632879, 41.885408 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Noevir USA, Inc.", "Category": "Health\/Beauty", "Products": "Cosmetics, Haircare\/Hair Accessories, Nutritional Supplements, Personal Care, Skincare", "Address": "316 Mt. Evans Blvd, Pine, CO, 80470-5100", "Email": "info@lemongrassspa.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -105.418281, 39.48742 ] } },
+{ "type": "Feature", "properties": { "Organizati": "JAFRA Cosmetics International, Inc.", "Category": "Health\/Beauty", "Products": "Cosmetics, Fragrances, Skincare", "Address": "4115 Spencer St, Torrance, CA, 90503-2419", "Email": "linda.c@enagic.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -118.357391, 33.845246 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Dudley Beauty Corp, LLC", "Category": "Health\/Beauty", "Products": "Cosmetics, Fragrances, Haircare\/Hair Accessories, Skincare", "Address": "PO Box 92902, Southlake, TX, 76092-0902", "Email": null, "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -97.152368, 32.948474 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Nu Skin Enterprises", "Category": "Health\/Beauty", "Products": "Cosmetics, Fragrances, Haircare\/Hair Accessories, Health\/Fitness\/Wellness, Internet Services, Nutritional Supplements, Oral Hygiene, Personal Care, Photography\/Photo Processing, Skincare, Telecommunications Services, Weight Management", "Address": "610 Crescent Executive Court, Lake Mary, FL, 32746-2111", "Email": "pr@thelimucompany.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -81.360005, 28.760496 ] } },
+{ "type": "Feature", "properties": { "Organizati": "4Life Research, LLC", "Category": "Health\/Beauty", "Products": "Aromatherapy, Haircare\/Hair Accessories, Health\/Fitness\/Wellness, Nutritional Supplements, Oral Hygiene, Personal Care, Skincare, Spa Products, Weight Management", "Address": "8308 NW 30 Terrace, Doral, FL, 33122-1915", "Email": "info@swissjust.net", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -80.332223, 25.801599 ] } },
+{ "type": "Feature", "properties": { "Organizati": "H2O at Home", "Category": "Health\/Beauty", "Products": "Aromatherapy, Green\/Organic\/Eco-Friendly, Health\/Fitness\/Wellness, Homecare, House and Kitchenwares, Personal Care, Skincare", "Address": "7575 Fulton Street East, Ada, MI, 49355-0001", "Email": null, "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -85.487016, 42.957165 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Arbonne International, LLC", "Category": "Health\/Beauty", "Products": "Aromatherapy, Cosmetics, Nutritional Supplements, Skincare", "Address": "3838 West Parkway Boulevard, West Valley City, UT, 84120-6336", "Email": "distserv@usana.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -111.98073, 40.713298 ] } },
+{ "type": "Feature", "properties": { "Organizati": "SwissJust", "Category": "Health\/Beauty", "Products": "Aromatherapy, Cosmetics, Fragrances, Health\/Fitness\/Wellness, Homeopathics, Personal Care, Skincare", "Address": "411 24th Street W Suite 111, Billings, MT, 59102-4752", "Email": "SLE@sasspurilla.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -108.576036, 45.77437 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Jordan Essentials", "Category": "Health\/Beauty", "Products": "Aromatherapy, Cosmetics, Fragrances, Green\/Organic\/Eco-Friendly, Personal Care, Skincare, Spa Products", "Address": "7501 East McCormick Parkway, Scottsdale, AZ, 85258-6407", "Email": null, "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -111.921759, 33.549941 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Nature's Sunshine Products, Inc.", "Category": "Health\/Beauty", "Products": "Aromatherapy, Cookware, Health\/Fitness\/Wellness, Homeopathics, Nutritional Supplements, Oral Hygiene, Personal Care, Skincare, Water Treatment Systems, Weight Management", "Address": "4731 West 136th Street, Crestwood, IL, 60445-1968", "Email": "http:\/\/www.johnamico.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -87.735902, 41.64474 ] } },
+{ "type": "Feature", "properties": { "Organizati": "LifeVantage Corporation", "Category": "Health\/Beauty", "Products": "Animal\/Pet Care, Health\/Fitness\/Wellness, Nutritional Supplements, Skincare, Weight Management", "Address": "333 Holtzman Road, Madison, WI, 53713-2109", "Email": "customercare@hycite.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -89.373121, 43.038835 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Modere", "Category": "Health\/Beauty", "Products": "Animal\/Pet Care, Haircare\/Hair Accessories, Health\/Fitness\/Wellness, Nutritional Supplements, Oral Hygiene, Personal Care, Skincare, Weight Management", "Address": "2103 Parkway Drive, Saint Peters, MO, 63376-6460", "Email": "bret@jbloomdesigns.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -90.573356, 38.797656 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Vollara, LLC", "Category": "Health\/Beauty", "Products": "Air Filters\/Air Filtration Systems, Health\/Fitness\/Wellness, Home Technology, Homeopathics, Nutritional Supplements, Personal Care, Skincare, Water Treatment Systems, Weight Management", "Address": "3005 1st Avenue, Seattle, WA, 98121-1010", "Email": "customercare@univera.com", "catid": "health" }, "geometry": { "type": "Point", "coordinates": [ -122.354495, 47.617701 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Tristar Enterprises, LLC", "Category": "Homegoods", "Products": "Vacuum Cleaners", "Address": "8210 W. State Road 84, Davie, FL, 33324-4641", "Email": "eryan@bign.com", "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -80.258137, 26.100323 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Aerus LLC (formerly Electrolux LLC)", "Category": "Homegoods", "Products": "Homecare, Vacuum Cleaners", "Address": "18563 East Gale Avenue, City of Industry, CA, 91748-1339", "Email": null, "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -117.896482, 33.995954 ] } },
+{ "type": "Feature", "properties": { "Organizati": "The Kirby Company", "Category": "Homegoods", "Products": "Homecare, Vacuum Cleaners", "Address": "96 Hwy 107 South, Cashiers, NC, 28717-1551", "Email": "wlupas@gracewearcollection.com", "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -83.099677, 35.112674 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Rexair LLC", "Category": "Homegoods", "Products": "Homecare, Vacuum Cleaners", "Address": "450 N. 54th Street, Chandler, AZ, 85226-2528", "Email": null, "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -111.968024, 33.309932 ] } },
+{ "type": "Feature", "properties": { "Organizati": "CUTCO\/Vector Marketing Corporation", "Category": "Homegoods", "Products": "Cutlery, House and Kitchenwares", "Address": "4300 Amon Carter Blvd., Arlington, TX, 76155-2685", "Email": "smc@saladmaster.com", "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -97.048381, 32.826933 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Hy Cite Enterprises, LLC", "Category": "Homegoods", "Products": "Cookware, Water Treatment Systems", "Address": "75 West Center Street, Provo, UT, 84601-4432", "Email": null, "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -111.659776, 40.233503 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Rena Ware International, Inc.", "Category": "Homegoods", "Products": "Cookware, Water Treatment Systems", "Address": "1406 West 14th Street, Tempe, AZ, 85281-6971", "Email": "michael@orendainternational.com", "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -111.960928, 33.413331 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Pampered Chef", "Category": "Homegoods", "Products": "Cookware, House and Kitchenwares", "Address": "588 S 2000 W, Springville, UT, 84663-3047", "Email": null, "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -111.648815, 40.158131 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Princess House, Inc.", "Category": "Homegoods", "Products": "Cookware, Home Accessories\/Decor, Tableware", "Address": "P.O. Box 609, Klamath Falls, OR, 97601-0329", "Email": "jerry@newearth.com", "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -121.816873, 42.293293 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Regal Ware, Inc.", "Category": "Homegoods", "Products": "Cookware, Cutlery, Tableware, Water Treatment Systems", "Address": "490 Virginia Road, Concord, MA, 1742", "Email": "inquiries.us@nyrorganic.com", "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -71.305936, 42.467324 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Saladmaster (Regal Ware, Inc.)", "Category": "Homegoods", "Products": "Cookware", "Address": "600 Cordwainer Drive, Norwell, MA, 02061-1644", "Email": "customerserviceus@partylite.com", "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -70.882354, 42.163861 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Younique", "Category": "Homegoods", "Products": "Clothing\/Shoes, Cosmetics, Fashion Accessories, Jewelry", "Address": "3400 Mayflower Avenue, Lehi, UT, 84043-3261", "Email": "https:\/\/www.youniqueproducts.com\/", "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -111.904275, 40.440355 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Gold Canyon", "Category": "Homegoods", "Products": "Candles\/Candle Accessories, Fragrances, Home Accessories\/Decor", "Address": "6120 Powers Ferry Road NW, Atlanta, GA, 30339-2982", "Email": null, "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -84.424507, 33.910011 ] } },
+{ "type": "Feature", "properties": { "Organizati": "PartyLite", "Category": "Homegoods", "Products": "Candles\/Candle Accessories, Fragrances, Home Accessories\/Decor", "Address": "737 East 1180 South, American Fork, UT, 84003-3395", "Email": "tnimailbag@tni.com", "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -111.778831, 40.354333 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Scentsy, Inc.", "Category": "Homegoods", "Products": "Candles\/Candle Accessories, Fragrances, Home Accessories\/Decor", "Address": "470 Myles Standish Boulevard, Taunton, MA, 02780-7324", "Email": "custsvc@princesshouse.com", "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -71.135299, 41.957004 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Amway", "Category": "Homegoods", "Products": "Business\/Commercial, Health\/Fitness\/Wellness, Home Technology, Homecare, Nutritional Supplements, Personal Care", "Address": "1825 E.38 1\/2 St., Austin, TX, 78722-1341", "Email": "support@noondaycollection.com", "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -97.707929, 30.288931 ] } },
+{ "type": "Feature", "properties": { "Organizati": "NYR Organic", "Category": "Homegoods", "Products": "Aromatherapy, Baby\/Childcare, Candles\/Candle Accessories, Cosmetics, Fragrances, Green\/Organic\/Eco-Friendly, Haircare\/Hair Accessories, Nutritional Supplements, Personal Care, Skincare, Spa Products", "Address": "1410 Lakeside Parkway, Flower Mound, TX, 75028-4026", "Email": "maketheswitch@mannatech.com", "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -97.05053, 32.996053 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Carico International", "Category": "Homegoods", "Products": "Air Filters\/Air Filtration Systems, Cookware, Crystal\/China, Cutlery, House and Kitchenwares, Tableware, Water Treatment Systems", "Address": "3125 West Executive Parkway, Lehi, UT,  84043-9572", "Email": null, "catid": "homegoods" }, "geometry": { "type": "Point", "coordinates": [ -111.899837, 40.429533 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Enagic USA Inc.", "Category": "Utilities", "Products": "Water Treatment Systems", "Address": "Hacienda Campus, Pleasanton, CA, 94588-2763", "Email": null, "catid": "utlities" }, "geometry": { "type": "Point", "coordinates": [ -121.89725, 37.697047 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Talk Fusion", "Category": "Other", "Products": "Internet Services, Telecommunications Services, Videos", "Address": "11245 SE 6th Street, Bellevue, WA, 98004-6499", "Email": "info@simplyfun.com", "catid": "other" }, "geometry": { "type": "Point", "coordinates": [ -122.189373, 47.603095 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Primerica, Inc.", "Category": "Other", "Products": "Financial Services", "Address": "165 Broadway, New York, NY, 10006-1404", "Email": "dearavon@avon.com", "catid": "other" }, "geometry": { "type": "Point", "coordinates": [ -74.010488, 40.709595 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Team National", "Category": "Other", "Products": "Autocare, Benefits Packages, Business\/Commercial, Financial Services, Group Buying Service, Home Accessories\/Decor, Jewelry, Nutritional Supplements, Telecommunications Services", "Address": "14675 Dallas Parkway, Dallas, TX, 75254-8050", "Email": null, "catid": "other" }, "geometry": { "type": "Point", "coordinates": [ -96.824726, 32.946172 ] } },
+{ "type": "Feature", "properties": { "Organizati": "pawTree", "Category": "Other", "Products": "Animal\/Pet Care", "Address": "2500 West Executive Parkway, Suite 100, Lehi, UT, 84043-3857", "Email": "nathanb@natr.com", "catid": "other" }, "geometry": { "type": "Point", "coordinates": [ -111.890443, 40.427719 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Health-Mor (An HMI Industries Inc. Company)", "Category": "Utilities", "Products": "Air Filters\/Air Filtration Systems", "Address": "3301 Exposition Blvd., Santa Monica, CA, 90404-5045", "Email": "beachbodycoaches@beachbody.com", "catid": "utlities" }, "geometry": { "type": "Point", "coordinates": [ -118.46308, 34.028646 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Damsel in Defense", "Category": "Technology", "Products": "Security Systems\/Devices", "Address": "19651 Alter, Foothill Ranch, CA, 92610-2507", "Email": "info@senegence.com", "catid": "technology" }, "geometry": { "type": "Point", "coordinates": [ -117.65651, 33.676547 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Big Planet (Division of Nu Skin Enterprises)", "Category": "Technology", "Products": "Internet Services, Telecommunications Services", "Address": "2701 E Pine Street, Meridian, ID, 83642-5924", "Email": "info@scentsy.com", "catid": "technology" }, "geometry": { "type": "Point", "coordinates": [ -116.358283, 43.611103 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Global Domains International, Inc.", "Category": "Technology", "Products": "Home Technology, Internet Services, Software\/Computers", "Address": "4100 Alpha Road, Dallas, TX, 75244-4326", "Email": "purso@aerusonline.com", "catid": "technology" }, "geometry": { "type": "Point", "coordinates": [ -96.840286, 32.932051 ] } },
+{ "type": "Feature", "properties": { "Organizati": "ACN, Inc.", "Category": "Technology", "Products": "Home Technology, Internet Services, Security Systems\/Devices, Telecommunications Services, Utilities", "Address": "400 Valley Road, Mt. Arlington, NJ, 07856-2316", "Email": "customerservice@the-cocoa-exchange.com", "catid": "technology" }, "geometry": { "type": "Point", "coordinates": [ -74.63922, 40.898826 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Ambit Energy", "Category": "Utilities", "Products": "Utilities", "Address": "609 Deep Valley Drive, Rolling Hill Estates, CA, 90274-3629", "Email": "info@nhtglobal.com", "catid": "utlities" }, "geometry": { "type": "Point", "coordinates": [ -118.372503, 33.770842 ] } },
+{ "type": "Feature", "properties": { "Organizati": "Stream Gas & Electric, Ltd. DBA Stream", "Category": "Utilities", "Products": "Utilities", "Address": "6450 Steubenville Pike, Pittsburgh, PA, 15205-1004", "Email": "info@sabika-jewelry.com", "catid": "utlities" }, "geometry": { "type": "Point", "coordinates": [ -80.158612, 40.449323 ] } }
+]
+}
+
+  </script>
+  
+<script id="jsbin-javascript">
+//create the map
+var map = L.map('map').setView([38, -98.5], 3.5); 
+ //basemap tiles 
+L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+    attribution: 'Map tiles &copy; <a href="www.stamen.com">StamenDesign</a>'
+}).addTo(map);
+
+
+
+//variable to store the layergroup
+var dataLayerGroup;
+
+//variable to store the value we want to filter out
+var filterval = document.getElementById("filter").value;
+
+//variable containing the filter function
+var colorFilter = function (feature) {
+    if (feature.properties.catid == filterval || filterval == "") return true
+ }
+
+
+//define the funtion to add the layer to the map or replace it. 
+function addLayerToMap(){
+   //remove the layer from the map entirely
+  if (map.hasLayer(dataLayerGroup)){
+    dataLayerGroup.remove();
+  }
+  //add the data layer and style based on attribute. 
+  dataLayerGroup = L.geoJson(pointsData, {
+    filter: colorFilter,
+    pointToLayer: function(feature, latlng) {
+        return new L.CircleMarker(latlng, {radius: 6, fillOpacity: 1, fillColor: '#00F'});
+    },
+    onEachFeature: function (feature, layer) {
+        layer.bindPopup("<strong>" + feature.properties.Organizati + "</strong><br/>" + "<strong>" + "Products/Services: " +"</strong>" +feature.properties.Products + "<br/>" + "<strong>" + "Address: " + "</strong>" + feature.properties.Address);
+    }, 
+    style: function(feature){
+        return{color:  feature.properties.markercolor};
+      },  
+    }).addTo(map);
+}  
+
+
+//listener for a filter input: 
+$("#filter").on("input", function(){
+  
+  filterval = document.getElementById("filter").value;
+  console.log("the filter was changed to ", filterval); 
+
+  //add the layer to the map again, now that we have changed the filter value. 
+  addLayerToMap();
+ 
+  
+}); //end listener function 
+
+
+
+//call the funtion to add the layer to the map for the first time (before interacting with the filter). 
+addLayerToMap();
+
+
+
+</script>
+</body>
+</html>
